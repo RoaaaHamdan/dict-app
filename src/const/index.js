@@ -1,6 +1,5 @@
 import { formatNullValue } from "../utils/dateUtils";
 
- 
 export const keys = [
   {
     field: "Keyword",
@@ -12,7 +11,6 @@ export const keys = [
     field: "CreationTime",
     valueFormatter: (p) => formatNullValue(p.value),
     filter: true,
-
   },
   {
     field: "IsEntryAdded",

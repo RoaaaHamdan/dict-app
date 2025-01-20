@@ -1,5 +1,6 @@
 import axios from "axios";
 import { isRecentlyAdded, getTime } from "./utils/dateUtils";
+import { toast } from "react-custom-alert";
 
 export const addWords = async (newWords) => {
   // eslint-disable-next-line no-useless-catch
@@ -26,7 +27,8 @@ export const deleteWord = async (id, { rejectWithValue }) => {
     );
     return response.data;
   } catch (error) {
-    alert("Error deleting word:", error);
+    toast.error("Error deleting word:", error);
+
     return rejectWithValue(
       error.response?.data || error.message || "Error deleting word",
     );

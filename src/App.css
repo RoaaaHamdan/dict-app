@@ -7,7 +7,7 @@
   display: block;
 }
 
-.ag-paging-panel{
+.ag-paging-panel {
   flex-direction: row !important;
   height: fit-content;
   align-items: center;
@@ -15,4 +15,60 @@
   gap: 10px;
   flex-wrap: wrap;
   justify-content: center;
+}
+/* Alert.css */
+.alert {
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 350px;
+  margin-top: 20px;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.alert-success {
+  background-color: #4caf50;
+  color: white;
+}
+
+.alert-error {
+  background-color: #f44336;
+  color: white;
+}
+
+.alert-warning {
+  background-color: #ff9800;
+  color: white;
+}
+
+.alert-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.--react--toast-alert {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.react-confirm-alert-button-group {
+  align-content: flex-end;
+  justify-content: flex-end !important;
+}
+.react-confirm-alert-body > h1 {
+  color: red !important;
+}
+.react-confirm-alert-body {
+  color: black !important;
+}
+
+.react-confirm-alert-overlay {
+  background: rgba(255, 255, 255, 0.3) !important;
 }

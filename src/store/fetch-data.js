@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { formatNullValue, isRecentlyAdded, getTime } from "../utils/dateUtils";
+import { toast } from "react-custom-alert";
 
 export const keys = [
   { field: "id" },
@@ -94,12 +95,12 @@ const wordsSlice = createSlice({
           word.id === updatedWord.id ? updatedWord : word,
         );
         state.status = true;
-        alert("Word updated successfully!");
+        toast.success("Word updated successfully!");
       })
       .addCase(updateWord.rejected, (state, action) => {
         state.status = false;
         state.error = action.payload || "Error updating word";
-        alert(state.error);
+        toast.error("Error updating word");
       });
   },
 });

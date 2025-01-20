@@ -4,6 +4,8 @@ import { deleteWord } from "../store/delete";
 import { removeWord } from "../store/fetch-data";
 import { DeleteIcon } from "../icons";
 import HoverComponent from "./HoverComponent";
+import { confirmAlert } from "react-confirm-alert";
+import { toast } from "react-custom-alert";
 
 const DeleteButtonComponent = (id) => {
   const dispatch = useDispatch();
@@ -16,7 +18,7 @@ const DeleteButtonComponent = (id) => {
       border: "none",
       cursor: "pointer",
       transition: "opacity 0.3s ease",
-      opacity: isHovered ? 0.6 : 1, // Change opacity dynamically
+      opacity: isHovered ? 0.6 : 1,
       width: "20px",
       height: "20px",
     },
@@ -28,15 +30,29 @@ const DeleteButtonComponent = (id) => {
       cursor: "pointer",
     },
   };
-  const handleDeleteClick = () => {
-    const isConfirmed = window.confirm(
-      "Are you sure you want to delete this word?",
-    );
+  const options = {
+    title: "Delete word",
+    message: "Are you sure you want to delete this word?",
+    buttons: [
+      {
+        label: "Yes",
+        onClick: () => {
+          dispatch(deleteWord(id.data.id));
+          dispatch(removeWord(id.data.id));
+          toast.success("Word deleted successfully.");
+        },
+      },
+      {
+        label: "No",
+      },
+    ],
+    closeOnEscape: true,
+    closeOnClickOutside: true,
+    keyCodeForClose: [8, 32],
+  };
 
-    if (isConfirmed) {
-      dispatch(deleteWord(id.data.id));
-      dispatch(removeWord(id.data.id));
-    }
+  const handleDeleteClick = () => {
+    confirmAlert(options);
   };
 
   return (
@@ -45,8 +61,8 @@ const DeleteButtonComponent = (id) => {
         title="Delete"
         style={styles.button}
         onClick={handleDeleteClick}
-        onMouseEnter={() => setIsHovered(true)} // Track hover
-        onMouseLeave={() => setIsHovered(false)} // Reset hover
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         <DeleteIcon style={styles.icon} />
       </button>

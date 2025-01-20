@@ -7,6 +7,7 @@ import DeleteButtonComponent from "./DeleteButtonComponent";
 import TableDirectionComponent from "./TableDirectionComponent";
 import { keys } from "../const";
 import useIsMobile from "../custom-hooks/useIsMobile";
+import { toast } from "react-custom-alert";
 
 function DataDisplayComponent() {
   const dispatch = useDispatch();
@@ -42,7 +43,8 @@ function DataDisplayComponent() {
     if (event.newValue) {
       await dispatch(updateWord(updatedData));
     } else {
-      alert("Please enter a valid value");
+      toast.info("Please enter a valid value");
+
       setRowData((prevData) =>
         prevData.map((row, i) =>
           i == event.rowIndex ? { ...words[event.rowIndex] } : { ...row },
@@ -76,14 +78,19 @@ function DataDisplayComponent() {
     <div
       style={{
         display: "flex",
-        ...(isMobile ? { height: "500px",flexDirection:'column',  gap: "20px"} : {
-         gap: "10px",
-
-        }),
+        ...(isMobile
+          ? {
+              height: "500px",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "10px",
+            }
+          : {
+              gap: "10px",
+            }),
       }}
     >
       <TableDirectionComponent onClick={() => setRtl(!isRtl)} isRtl={isRtl} />
-
       <AgGridReact
         domLayout={domLayout}
         pagination={true}

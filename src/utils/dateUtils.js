@@ -7,7 +7,7 @@ export const isRecentlyAdded = (creationTime, thresholdDays = 7) => {
 };
 
 export const formatNullValue = (value) =>
-  value === "NULL" || value === null ? "Not provided" : value; //Since data from excel so it comes as string
+  value === "NULL" || value === null ? "____" : value; //Since data from excel so it comes as string
 
 export const getTime = (date) => {
   const month = date.getMonth() + 1;

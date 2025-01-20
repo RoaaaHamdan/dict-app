@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-custom-alert";
 
 export const deleteWord = createAsyncThunk(
   "wordDeletion/delete",
@@ -10,7 +11,8 @@ export const deleteWord = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      alert("Error deleting word:", error);
+      toast.error("Error deleting word:", error);
+
       return rejectWithValue(
         error.response?.data || error.message || "Error deleting word",
       );

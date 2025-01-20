@@ -5,6 +5,7 @@ import { addWords } from "../store/add";
 import { fetchWords } from "../store/fetch-data";
 import { AddIcon } from "../icons";
 import HoverComponent from "./HoverComponent";
+import { toast } from "react-custom-alert";
 
 const ExcelDateToJSDate = (date) => {
   if (date !== "NULL") {
@@ -36,9 +37,8 @@ const readFile = (file, callback) => {
     callback(sheetData);
   };
 
-  reader.onerror = (error) => {
-    console.error("File reading error:", error);
-    alert("Failed to read the file.");
+  reader.onerror = () => {
+    toast.error("Failed to read the file.");
   };
 
   reader.readAsBinaryString(file);
@@ -79,7 +79,7 @@ function FileInput() {
       dispatch(addWords(formattedData.slice(0, 20)));
 
       if (!loading) {
-        alert("Data added successfully");
+        toast.success("Data added successfully");
         dispatch(fetchWords());
       }
       e.target.value = "";
