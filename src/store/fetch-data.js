@@ -2,8 +2,34 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { formatNullValue, isRecentlyAdded, getTime } from "../utils/dateUtils";
 
+export const keys = [
+  { field: "id" },
+  { field: "Keyword", editable: true },
+  {
+    field: "Describtion",
+    valueFormatter: (p) => formatNullValue(p.value),
+    editable: true,
+  },
+  {
+    field: "ConcurrencyStamp",
+    editable: true,
+    valueFormatter: (p) => formatNullValue(p.value),
+  },
+  { field: "CreationTime", valueFormatter: (p) => formatNullValue(p.value) },
+  {
+    field: "LastModificationTime",
+    valueFormatter: (p) => formatNullValue(p.value),
+  },
+  {
+    field: "LastModifierId",
+    valueFormatter: (p) => formatNullValue(p.value),
+  },
+  { field: "IsEntryAdded", valueFormatter: (p) => formatNullValue(p.value) },
+  { field: "RecentlyAdded", valueFormatter: (p) => formatNullValue(p.value) },
+];
 export const fetchWords = createAsyncThunk("words/fetchWords", async () => {
   const response = await axios.get(
+    // process.env.REACT_APP_API_URL,
     "https://67880bd2c4a42c9161092912.mockapi.io/api/v1/words",
   );
 
@@ -18,6 +44,7 @@ export const updateWord = createAsyncThunk(
   async (updatedWord, { rejectWithValue }) => {
     try {
       const response = await axios.put(
+        //  `${process.env.REACT_APP_API_URL}/${updatedWord.id}`,
         `https://67880bd2c4a42c9161092912.mockapi.io/api/v1/words/${updatedWord.id}`,
         { ...updatedWord, LastModificationTime: getTime(new Date()) },
       );
@@ -30,31 +57,7 @@ export const updateWord = createAsyncThunk(
 
 const initialState = {
   words: [],
-  keys: [
-    { field: "id" },
-    { field: "Keyword", editable: true },
-    {
-      field: "Describtion",
-      valueFormatter: (p) => formatNullValue(p.value),
-      editable: true,
-    },
-    {
-      field: "ConcurrencyStamp",
-      editable: true,
-      valueFormatter: (p) => formatNullValue(p.value),
-    },
-    { field: "CreationTime", valueFormatter: (p) => formatNullValue(p.value) },
-    {
-      field: "LastModificationTime",
-      valueFormatter: (p) => formatNullValue(p.value),
-    },
-    {
-      field: "LastModifierId",
-      valueFormatter: (p) => formatNullValue(p.value),
-    },
-    { field: "IsEntryAdded", valueFormatter: (p) => formatNullValue(p.value) },
-    { field: "RecentlyAdded", valueFormatter: (p) => formatNullValue(p.value) },
-  ],
+  keys: [],
   loading: true,
   status: true,
   error: null,
@@ -91,10 +94,12 @@ const wordsSlice = createSlice({
           word.id === updatedWord.id ? updatedWord : word,
         );
         state.status = true;
+        alert("Word updated successfully!");
       })
       .addCase(updateWord.rejected, (state, action) => {
         state.status = false;
         state.error = action.payload || "Error updating word";
+        alert(state.error);
       });
   },
 });

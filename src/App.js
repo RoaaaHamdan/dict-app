@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { DataDisplayComponent, FileInput } from "./components";
 import { setupAgGrid } from "./utils/setupAgGrid";
-
 import "./App.css";
 
 const styles = {

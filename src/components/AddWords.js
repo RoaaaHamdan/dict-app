@@ -3,6 +3,8 @@ import * as XLSX from "xlsx";
 import { useSelector, useDispatch } from "react-redux";
 import { addWords } from "../store/add";
 import { fetchWords } from "../store/fetch-data";
+import { AddIcon } from "../icons";
+import HoverComponent from "./HoverComponent";
 
 const ExcelDateToJSDate = (date) => {
   if (date !== "NULL") {
@@ -46,6 +48,26 @@ function FileInput() {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.words);
 
+  const styles = {
+    container: {
+      width: "fit-content",
+      padding: "10px",
+      background: "rgb(0, 72, 174)",
+      borderRadius: 10,
+      display: "flex",
+      flexDirection: "row",
+      gap: "5px",
+      justifyContent: "center",
+      alignItems: "center",
+      color: "white",
+      cursor: "pointer",
+    },
+    icon: {
+      width: "20px",
+      height: "20px",
+    },
+  };
+
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -54,7 +76,7 @@ function FileInput() {
 
     readFile(file, (sheetData) => {
       const formattedData = processSheetData(sheetData, keysToConvert);
-      dispatch(addWords(formattedData.slice(0, 3)));
+      dispatch(addWords(formattedData.slice(0, 20)));
 
       if (!loading) {
         alert("Data added successfully");
@@ -65,22 +87,21 @@ function FileInput() {
   };
 
   return (
-    <div
-      style={{
-        width: "fit-content",
-        padding: "20px",
-        background: "blue",
-        opacity: ".8",
-        borderRadius: 4,
-        display: "flex",
-        alignSelf: "end",
-      }}
-    >
+    <HoverComponent styles={styles.container}>
       <label htmlFor="formId">
-        Add new words
-        <input type="file" id="formId" hidden onChange={handleFileUpload} />
+        <span style={{ cursor: "pointer" }}>Add new words</span>
+        <input
+          type="file"
+          accept=".xlsx,.xls"
+          id="formId"
+          hidden
+          onChange={handleFileUpload}
+        />
       </label>
-    </div>
+      <div style={styles.icon}>
+        <AddIcon />
+      </div>
+    </HoverComponent>
   );
 }
 
